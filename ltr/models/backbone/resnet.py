@@ -3,8 +3,7 @@ import torch.nn as nn
 from collections import OrderedDict
 import torch.utils.model_zoo as model_zoo
 # from torchvision.models.resnet import model_urls
-from torchvision.models.resnet import ResNet50_Weights
-from torchvision.models.resnet import ResNet18_Weights
+from torchvision.models.resnet import model_urls
 from .base import Backbone
 
 
@@ -255,7 +254,9 @@ def resnet18(output_layers=None, pretrained=False, **kwargs):
     model = ResNet(BasicBlock, [2, 2, 2, 2], output_layers, **kwargs)
 
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(ResNet18_Weights.IMAGENET1K_V2))
+        # model.load_state_dict(model_zoo.load_url(resnet18))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet18']))
+
     return model
 
 
@@ -272,6 +273,6 @@ def resnet50(output_layers=None, pretrained=False, **kwargs):
 
     model = ResNet(Bottleneck, [3, 4, 6, 3], output_layers, **kwargs)
     if pretrained:
-        # model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
-        model.load_state_dict(model_zoo.load_url(ResNet50_Weights.IMAGENET1K_V2))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
+        # model.load_state_dict(model_zoo.load_url(resnet50))
     return model
