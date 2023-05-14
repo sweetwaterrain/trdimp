@@ -46,7 +46,7 @@ def main():
     parser.add_argument('--sequence', type=str, default=None, help='Sequence number or name.')
     parser.add_argument('--debug', type=int, default=0, help='Debug level.')
     parser.add_argument('--threads', type=int, default=0, help='Number of threads.')
-    parser.add_argument('--use_visdom', type=bool, default=True, help='Flag to enable visdom.')
+    parser.add_argument('--use_visdom', type=bool, default=False, help='Flag to enable visdom.')
     parser.add_argument('--visdom_server', type=str, default='127.0.0.1', help='Server for visdom.')
     parser.add_argument('--visdom_port', type=int, default=8097, help='Port for visdom.')
 
