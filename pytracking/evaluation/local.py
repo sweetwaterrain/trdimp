@@ -8,8 +8,8 @@ def local_env_settings():
 
     settings.davis_dir = ''
     settings.got10k_path = '/kaggle/input/got10k'
-    settings.got_packed_results_path = ''
-    settings.got_reports_path = ''
+    settings.got_packed_results_path = '/kaggle/working/trdimp/pytracking'
+    settings.got_reports_path = '/kaggle/working/trdimp/pytracking'
     settings.lasot_path = ''
     settings.network_path = '/kaggle/working/trdimp/pytracking/networks'
     settings.nfs_path = ''
