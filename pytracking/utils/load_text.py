@@ -24,7 +24,7 @@ def load_text_numpy(path, delimiter, dtype):
                 # to deal with different delimeters
                 import io
                 with open(path, 'r') as f:
-                    ground_truth_rect = np.loadtxt(io.StringIO(f.read().replace(',', '  ')))
+                    ground_truth_rect = np.loadtxt(io.StringIO(f.read().replace(' ', ',')))
 
                 return ground_truth_rect
             except:
