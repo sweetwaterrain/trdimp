@@ -12,7 +12,7 @@ def local_env_settings():
     settings.got_reports_path = ''
     settings.lasot_path = ''
     settings.network_path = ''
-    settings.nfs_path = '/kaggle/working/trdimp/pytracking/networks/'
+    settings.nfs_path = './pytracking/networks/'
     settings.otb_path = '/kaggle/input/otb2015/OTB100'
     settings.result_plot_path = ''
     settings.results_path = ''
