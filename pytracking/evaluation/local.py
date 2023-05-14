@@ -13,7 +13,7 @@ def local_env_settings():
     settings.lasot_path = ''
     settings.network_path = ''
     settings.nfs_path = '/kaggle/working/trdimp/pytracking/networks'
-    settings.otb_path = '/kaggle/input/otb2015/OBT100'
+    settings.otb_path = '/kaggle/input/otb2015/OTB100'
     settings.result_plot_path = ''
     settings.results_path = ''
     settings.segmentation_path = ''
