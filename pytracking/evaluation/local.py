@@ -21,7 +21,7 @@ def local_env_settings():
     settings.tpl_path = ''
     settings.trackingnet_path = ''
     settings.uav_path = ''
-    settings.vot_path = ''
+    settings.vot_path = '/kaggle/input/vot2013/'
     settings.youtubevos_dir = ''
 
     return settings
