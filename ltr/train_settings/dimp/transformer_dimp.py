@@ -29,13 +29,13 @@ def run(settings):
     # settings.print_stats = ['Loss/total', 'Loss/iou', 'ClfTrain/init_loss', 'ClfTrain/test_loss']
 
     # Train datasets
-    lasot_train = Lasot(settings.env.lasot_dir, split='train')
+    # lasot_train = Lasot(settings.env.lasot_dir, split='train')
     got10k_train = Got10k(settings.env.got10k_dir, split='vottrain')
-    trackingnet_train = TrackingNet(settings.env.trackingnet_dir, set_ids=list(range(4)))   
-    coco_train = MSCOCOSeq(settings.env.coco_dir)
+    # trackingnet_train = TrackingNet(settings.env.trackingnet_dir, set_ids=list(range(4)))
+    # coco_train = MSCOCOSeq(settings.env.coco_dir)
 
     # Validation datasets
-    got10k_val = Got10k(settings.env.got10k_dir, split='votval')
+    # got10k_val = Got10k(settings.env.got10k_dir, split='votval')
 
 
     # Data transform
@@ -46,8 +46,8 @@ def run(settings):
                                     tfm.RandomHorizontalFlip(probability=0.5),
                                     tfm.Normalize(mean=settings.normalize_mean, std=settings.normalize_std))
 
-    transform_val = tfm.Transform(tfm.ToTensor(),
-                                  tfm.Normalize(mean=settings.normalize_mean, std=settings.normalize_std))
+    # transform_val = tfm.Transform(tfm.ToTensor(),
+    #                               tfm.Normalize(mean=settings.normalize_mean, std=settings.normalize_std))
 
     # The tracking pairs processing module
     output_sigma = settings.output_sigma_factor / settings.search_area_factor
@@ -78,11 +78,14 @@ def run(settings):
                                                       proposal_params=proposal_params,
                                                       label_function_params=label_params,
                                                       label_density_params=label_density_params,
-                                                      transform=transform_val,
+                                                      # transform=transform_val,
                                                       joint_transform=transform_joint)
 
     # Train sampler and loader
-    dataset_train = sampler.DiMPSampler([lasot_train, got10k_train, trackingnet_train, coco_train], [1,1,1,1],
+    # dataset_train = sampler.DiMPSampler([lasot_train, got10k_train, trackingnet_train, coco_train], [1,1,1,1],
+    #                                     samples_per_epoch=50000, max_gap=500, num_test_frames=3, num_train_frames=3,
+    #                                     processing=data_processing_train)
+    dataset_train = sampler.DiMPSampler([got10k_train], [1],
                                         samples_per_epoch=50000, max_gap=500, num_test_frames=3, num_train_frames=3,
                                         processing=data_processing_train)
 
@@ -90,12 +93,12 @@ def run(settings):
                              shuffle=True, drop_last=True, stack_dim=1)
 
     # Validation samplers and loaders
-    dataset_val = sampler.DiMPSampler([got10k_val], [1], samples_per_epoch=10000, max_gap=500,
-                                      num_test_frames=3, num_train_frames=3,
-                                      processing=data_processing_val)
+    # dataset_val = sampler.DiMPSampler([got10k_val], [1], samples_per_epoch=10000, max_gap=500,
+    #                                   num_test_frames=3, num_train_frames=3,
+    #                                   processing=data_processing_val)
 
-    loader_val = LTRLoader('val', dataset_val, training=False, batch_size=settings.batch_size, num_workers=settings.num_workers,
-                           shuffle=False, drop_last=True, epoch_interval=5, stack_dim=1)
+    # loader_val = LTRLoader('val', dataset_val, training=False, batch_size=settings.batch_size, num_workers=settings.num_workers,
+    #                        shuffle=False, drop_last=True, epoch_interval=5, stack_dim=1)
 
     # Create network and actor
     net = dimpnet.dimpnet50(filter_size=settings.target_filter_sz, backbone_pretrained=True, optim_iter=5,
@@ -126,6 +129,7 @@ def run(settings):
 
     lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.2)
 
-    trainer = LTRTrainer(actor, [loader_train, loader_val], optimizer, settings, lr_scheduler)
+    # trainer = LTRTrainer(actor, [loader_train, loader_val], optimizer, settings, lr_scheduler)
+    trainer = LTRTrainer(actor, [loader_train], optimizer, settings, lr_scheduler)
 
     trainer.train(50, load_latest=True, fail_safe=True)

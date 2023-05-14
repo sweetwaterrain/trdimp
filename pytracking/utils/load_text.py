@@ -2,11 +2,30 @@ import numpy as np
 import pandas as pd
 
 
+# def load_text_numpy(path, delimiter, dtype):
+#     if isinstance(delimiter, (tuple, list)):
+#         for d in delimiter:
+#             try:
+#                 ground_truth_rect = np.loadtxt(path, delimiter=d, dtype=dtype)
+#                 return ground_truth_rect
+#             except:
+#                 pass
+#
+#         raise Exception('Could not read file {}'.format(path))
+#     else:
+#         ground_truth_rect = np.loadtxt(path, delimiter=delimiter, dtype=dtype)
+#         return ground_truth_rect
 def load_text_numpy(path, delimiter, dtype):
     if isinstance(delimiter, (tuple, list)):
         for d in delimiter:
             try:
-                ground_truth_rect = np.loadtxt(path, delimiter=d, dtype=dtype)
+                # ground_truth_rect = np.loadtxt(path, delimiter=d, dtype=dtype)
+
+                # to deal with different delimeters
+                import io
+                with open(path, 'r') as f:
+                    ground_truth_rect = np.loadtxt(io.StringIO(f.read().replace(',', ' ')))
+
                 return ground_truth_rect
             except:
                 pass
