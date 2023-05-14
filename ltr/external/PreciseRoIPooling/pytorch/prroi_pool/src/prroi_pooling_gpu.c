@@ -14,7 +14,7 @@
 #include <ATen/ATen.h>
 #include <ATen/cuda/CUDAContext.h>
 
-#include <THC/THC.h>
+//#include <THC/THC.h>
 
 #include "prroi_pooling_gpu_impl.cuh"
 
@@ -28,7 +28,7 @@ at::Tensor prroi_pooling_forward_cuda(const at::Tensor &features, const at::Tens
     auto output = at::zeros({nr_rois, nr_channels, pooled_height, pooled_width}, features.options());
 
     if (output.numel() == 0) {
-        THCudaCheck(cudaGetLastError());
+       AT_CUDA_CHECK(cudaGetLastError());
         return output;
     }
 
@@ -39,7 +39,7 @@ at::Tensor prroi_pooling_forward_cuda(const at::Tensor &features, const at::Tens
         top_count
     );
 
-    THCudaCheck(cudaGetLastError());
+   AT_CUDA_CHECK(cudaGetLastError());
     return output;
 }
 
@@ -58,7 +58,7 @@ at::Tensor prroi_pooling_backward_cuda(
     int bottom_count = batch_size * nr_channels * height * width;
 
     if (output.numel() == 0) {
-        THCudaCheck(cudaGetLastError());
+       AT_CUDA_CHECK(cudaGetLastError());
         return features_diff;
     }
 
@@ -71,7 +71,7 @@ at::Tensor prroi_pooling_backward_cuda(
         top_count, bottom_count
     );
 
-    THCudaCheck(cudaGetLastError());
+   AT_CUDA_CHECK(cudaGetLastError());
     return features_diff;
 }
 
@@ -89,7 +89,7 @@ at::Tensor prroi_pooling_coor_backward_cuda(
     int bottom_count = nr_rois * 5;
 
     if (output.numel() == 0) {
-        THCudaCheck(cudaGetLastError());
+       AT_CUDA_CHECK(cudaGetLastError());
         return coor_diff;
     }
 
@@ -102,7 +102,7 @@ at::Tensor prroi_pooling_coor_backward_cuda(
         top_count, bottom_count
     );
 
-    THCudaCheck(cudaGetLastError());
+   AT_CUDA_CHECK(cudaGetLastError());
     return coor_diff;
 }
 
