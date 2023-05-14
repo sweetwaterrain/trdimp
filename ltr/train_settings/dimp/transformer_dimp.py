@@ -12,8 +12,8 @@ from ltr import MultiGPU
 
 def run(settings):
     settings.description = 'Transformer-assisted tracker. Our baseline approach is SuperDiMP'
-    settings.batch_size = 40
-    settings.num_workers = 8
+    settings.batch_size = 16
+    settings.num_workers = 4
     settings.multi_gpu = True
     settings.print_interval = 1
     settings.normalize_mean = [0.485, 0.456, 0.406]
