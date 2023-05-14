@@ -7,7 +7,7 @@ def local_env_settings():
     # Set your local paths here.
 
     settings.davis_dir = ''
-    settings.got10k_path = '/kaggle/input/got10k/test'
+    settings.got10k_path = '/kaggle/input/got10k'
     settings.got_packed_results_path = ''
     settings.got_reports_path = ''
     settings.lasot_path = ''
